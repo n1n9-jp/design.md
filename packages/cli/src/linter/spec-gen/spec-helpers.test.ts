@@ -41,6 +41,11 @@ describe('getRulesTable', () => {
 });
 
 describe('getSpecContent', () => {
+  it('loads the English spec with a link to the Japanese translation', () => {
+    const content = getSpecContent();
+    expect(content).toContain('[日本語](spec.md)');
+  });
+
   it('returns spec content with expected heading', () => {
     const content = getSpecContent();
     expect(content).toContain('# DESIGN.md Format');

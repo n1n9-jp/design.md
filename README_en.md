@@ -90,7 +90,7 @@ npx @google/design.md diff DESIGN.md DESIGN-v2.md
 
 ## The Specification
 
-The full DESIGN.md spec lives at [`docs/spec.md`](docs/spec.md). What follows is a condensed reference.
+The full DESIGN.md spec lives at [`docs/spec_en.md`](docs/spec_en.md). What follows is a condensed reference.
 
 ### File Structure
 

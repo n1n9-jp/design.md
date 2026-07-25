@@ -14,7 +14,7 @@
 // limitations under the License.
 
 /**
- * Generate docs/spec.md from docs/spec.mdx + spec-config.ts.
+ * Generate docs/spec_en.md from docs/spec.mdx + spec-config.ts.
  *
  * Usage:
  *   bun run packages/linter/src/spec-gen/generate.ts
@@ -29,7 +29,7 @@ import * as renderers from './renderers.js';
 
 const ROOT = resolve(import.meta.dir, '../../../../../');
 const MDX_PATH = resolve(import.meta.dir, 'spec.mdx');
-const OUTPUT_PATH = resolve(ROOT, 'docs/spec.md');
+const OUTPUT_PATH = resolve(ROOT, 'docs/spec_en.md');
 
 const isCheck = process.argv.includes('--check');
 
@@ -55,7 +55,7 @@ async function main() {
   const generated = await compileMdx(source, scope);
 
   // Prepend header comment
-  const header = `<!-- Generated from spec.mdx + spec-config.ts | version: ${cfg.SPEC_VERSION} -->\n<!-- Do not edit directly. Run \`bun run spec:gen\` to regenerate. -->\n\n`;
+  const header = `<!-- Generated from spec.mdx + spec-config.ts | version: ${cfg.SPEC_VERSION} -->\n<!-- Do not edit directly. Run \`bun run spec:gen\` to regenerate. -->\n\n[日本語](spec.md)\n\n`;
   const content = header + generated;
 
   if (isCheck) {
@@ -67,10 +67,10 @@ async function main() {
     const generatedBody = stripHeader(content);
 
     if (existingBody === generatedBody) {
-      console.log('✅ docs/spec.md is up to date.');
+      console.log('✅ docs/spec_en.md is up to date.');
       process.exit(0);
     } else {
-      console.error('❌ docs/spec.md is out of date. Run `bun run spec:gen` to regenerate.');
+      console.error('❌ docs/spec_en.md is out of date. Run `bun run spec:gen` to regenerate.');
 
       const existingLines = existingBody.split('\n');
       const generatedLines = generatedBody.split('\n');
@@ -87,7 +87,7 @@ async function main() {
   }
 
   await writeFile(OUTPUT_PATH, content);
-  console.log(`✅ Generated docs/spec.md (${content.split('\n').length} lines)`);
+  console.log(`✅ Generated docs/spec_en.md (${content.split('\n').length} lines)`);
 }
 
 main();

@@ -1,22 +1,23 @@
-<!-- Generated from spec.mdx + spec-config.ts | version: alpha -->
-<!-- Do not edit directly. Run `bun run spec:gen` to regenerate. -->
+<!-- docs/spec_en.md の日本語訳 | version: alpha -->
+<!-- 英語版は spec.mdx + spec-config.ts から生成されます。英語版の変更時はこの翻訳も更新してください。 -->
 
-# DESIGN.md Format
+[English](spec_en.md)
 
-DESIGN.md is a self-contained, plain-text representation of a design system. It defines the visual identity of a brand and product, thereby ensuring that these stylistic choices can be followed across design sessions and between different AI agents and tools.  As a human-readable, open-format document, it serves as a living source of truth that both humans and AI can understand and refine.
+# DESIGN.md フォーマット
 
-A DESIGN.md file contains two parts: An optional YAML frontmatter, and a markdown body. The YAML front matter contains machine-readable design tokens. The markdown body sections provide human-readable design rationale and guidance. Prose may use descriptive color names (e.g., "Midnight Forest Green") that correspond to systematic token names (e.g., `primary`). The tokens are the normative values; the prose provides context for how to apply them.
+DESIGN.md は、デザインシステムを自己完結したプレーンテキストで表現するフォーマットです。ブランドとプロダクトのビジュアルアイデンティティを定義し、複数のデザインセッションや異なる AI エージェント、ツールの間でも一貫したスタイルを適用できるようにします。人間が読めるオープンフォーマットの文書として、人間と AI の両方が理解し、改善できる継続的な信頼できる情報源となります。
 
-# Design Tokens
+DESIGN.md ファイルは、任意の YAML フロントマターと Markdown 本文の 2 つの部分で構成されます。YAML フロントマターには、機械可読なデザイントークンを記述します。Markdown 本文の各セクションには、人間が読めるデザインの意図とガイダンスを記述します。説明文では、体系的なトークン名（例: `primary`）に対応する説明的な色名（例:「Midnight Forest Green」）を使用できます。トークンは規範となる値であり、説明文はその値を適用するための文脈を提供します。
 
-DESIGN.md may embed design tokens in a structured format. The system that we use to describe design tokens is inspired by the
-[Design Token JSON spec](https://www.designtokens.org/tr/2025.10/format/#abstract). Specifically, we adopt the concept of typed token groups (colors, typography, spacing) and the `{path.to.token}` reference syntax for cross-referencing values.
+# デザイントークン
 
-These tokens are easily converted from or to `tokens.json`, Figma variables, and Tailwind theme configs.
+DESIGN.md には、構造化された形式でデザイントークンを埋め込むことができます。デザイントークンの記述には、[Design Token JSON 仕様](https://www.designtokens.org/tr/2025.10/format/#abstract)から着想を得た仕組みを使用します。具体的には、型付きトークングループ（colors、typography、spacing）の概念と、値を相互参照するための `{path.to.token}` 構文を採用しています。
 
-Design tokens are embedded as YAML front matter at the beginning of the file. The front matter block must begin with a line containing exactly `---` and end with a line containing exactly `---`. The YAML content between these delimiters is parsed according to the schema defined below.
+これらのトークンは、`tokens.json`、Figma Variables、Tailwind テーマ設定との間で容易に相互変換できます。
 
-Example:
+デザイントークンは、ファイル先頭の YAML フロントマターとして埋め込みます。フロントマターブロックは、`---` だけを含む行で始まり、`---` だけを含む行で終わる必要があります。この区切り文字の間にある YAML は、以下で定義するスキーマに従って解析されます。
+
+例:
 
 ```yaml
 ---
@@ -36,14 +37,14 @@ typography:
 ---
 ```
 
-## Schema
+## スキーマ
 
-Below is the schema for the design tokens defined in the front matter:
+フロントマターで定義するデザイントークンのスキーマは次のとおりです。
 
 ```yaml
-version: <string>          # optional, current version: "alpha"
+version: <string>          # 任意、現在のバージョン: "alpha"
 name: <string>
-description: <string>      # optional
+description: <string>      # 任意
 colors:
   <token-name>: <Color>
 typography:
@@ -57,66 +58,64 @@ components:
     <token-name>: <string|token reference>
 ```
 
-The `<scale-level>` placeholder represents a named level in a sizing or spacing scale. Common level names include `xs`, `sm`, `md`, `lg`, `xl`, and `full`. Any descriptive string key is valid.
+`<scale-level>` プレースホルダーは、サイズまたはスペーシングのスケールにおける名前付きレベルを表します。一般的なレベル名には `xs`、`sm`、`md`、`lg`、`xl`、`full` があります。説明的な任意の文字列キーを使用できます。
 
-**Color**: A color value is any valid CSS color string. Supported formats include:
+**Color**: 有効な CSS カラー文字列を色の値として使用できます。対応する形式は次のとおりです。
 
-- Hex: `#RGB`, `#RGBA`, `#RRGGBB`, `#RRGGBBAA`
-- Named colors: `red`, `cornflowerblue`, `transparent`
-- Functional: `rgb()`, `rgba()`, `hsl()`, `hsla()`, `hwb()`
-- Wide-gamut: `oklch()`, `oklab()`, `lch()`, `lab()`
-- Mixing: `color-mix(in srgb, ...)`
+- Hex: `#RGB`、`#RGBA`、`#RRGGBB`、`#RRGGBBAA`
+- 名前付きカラー: `red`、`cornflowerblue`、`transparent`
+- 関数形式: `rgb()`、`rgba()`、`hsl()`、`hsla()`、`hwb()`
+- 広色域: `oklch()`、`oklab()`、`lch()`、`lab()`
+- 混色: `color-mix(in srgb, ...)`
 
-All color values are internally converted to sRGB for WCAG contrast checking. The original format is preserved for display and export.
+WCAG コントラストの検証では、すべての色の値を内部的に sRGB へ変換します。表示とエクスポートでは元の形式を保持します。
 
-Hex notation (`#RRGGBB`) remains the recommended default for simplicity and broad tooling support.
+単純で幅広いツールに対応できるため、引き続き Hex 表記（`#RRGGBB`）を推奨します。
 
-- `fontFamily` (string)
-- `fontSize` (Dimension)
-- `fontWeight` (number) - A numeric font weight value (e.g., `400`, `700`). In YAML, this may be expressed as either a bare number or a quoted string; both are equivalent.
-- `lineHeight` (Dimension | number) - Accepts either a Dimension (e.g., `24px`, `1.5rem`) or a unitless number (e.g., `1.6`). A unitless number represents a multiplier of the element's `fontSize`, which is the recommended CSS practice.
-- `letterSpacing` (Dimension)
-- `fontFeature` (string) - configures
-  [`font-feature-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/font-feature-settings).
-- `fontVariation` (string) - configures
-  [`font-variation-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/font-variation-settings).
+- `fontFamily`（string）
+- `fontSize`（Dimension）
+- `fontWeight`（number）— 数値のフォントウェイト（例: `400`、`700`）。YAML では裸の数値または引用符で囲んだ文字列のどちらでも記述でき、両者は同等です。
+- `lineHeight`（Dimension | number）— Dimension（例: `24px`、`1.5rem`）または単位なしの数値（例: `1.6`）を受け付けます。単位なしの数値は要素の `fontSize` に対する倍率を表し、CSS で推奨される方法です。
+- `letterSpacing`（Dimension）
+- `fontFeature`（string）— [`font-feature-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/font-feature-settings) を設定します。
+- `fontVariation`（string）— [`font-variation-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/font-variation-settings) を設定します。
 
-**Dimension**: A dimension value is a string with a unit suffix. Valid units are: px, em, rem.
+**Dimension**: 単位の接尾辞を持つ文字列です。有効な単位は px、em、rem です。
 
-**Token References**: A token reference must be wrapped in curly braces, and contain an object path to another value in the YAML tree. For most token groups, the reference must point to a primitive value (e.g., `colors.primary-60`), not a group (e.g., `colors`). Within the `components` section, references to composite values (e.g., `{typography.label-md}`) are permitted.
+**トークン参照**: トークン参照は波括弧で囲み、YAML ツリー内の別の値を指すオブジェクトパスを含める必要があります。ほとんどのトークングループでは、参照先はグループ（例: `colors`）ではなくプリミティブ値（例: `colors.primary-60`）である必要があります。`components` セクション内では、複合値（例: `{typography.label-md}`）への参照も許可されます。
 
-# Sections
+# セクション
 
-Every `DESIGN.md` follows the same structure. Sections can be omitted if they're not relevant to your project, but those present should appear in the sequence listed below. All sections use `<h2>` (`##`) headings. An optional `<h1>` heading may appear for document titling purposes but is not parsed as a section.
+すべての `DESIGN.md` は同じ構造に従います。プロジェクトに関係のないセクションは省略できますが、記載するセクションは以下の順序で並べます。すべてのセクションには `<h2>`（`##`）見出しを使用します。文書タイトル用に任意の `<h1>` 見出しを記載できますが、セクションとしては解析されません。
 
-### Section Order
+### セクションの順序
 
-1. **Overview** (also: "Brand & Style")
+1. **Overview**（別名:「Brand & Style」）
 2. **Colors**
 3. **Typography**
-4. **Layout** (also: "Layout & Spacing")
-5. **Elevation & Depth** (also: "Elevation")
+4. **Layout**（別名:「Layout & Spacing」）
+5. **Elevation & Depth**（別名:「Elevation」）
 6. **Shapes**
 7. **Components**
 8. **Do's and Don'ts**
 
-### Prose and Tokens
+### 説明文とトークン
 
 ## Overview
 
-Also known as "Brand & Style".
+「Brand & Style」とも呼ばれます。
 
-This section is a holistic description of a product's look and feel. It defines the brand personality, target audience, and the emotional response the UI should evoke, such as whether it should feel playful or professional, dense or spacious. It serves as foundational context for guiding the agent's high-level stylistic decisions when a specific rule or token isn't explicitly defined.
+このセクションでは、プロダクトのルック＆フィールを包括的に説明します。ブランドの個性、対象ユーザー、UI が喚起すべき感情を定義します。たとえば、遊び心があるかプロフェッショナルか、情報密度が高いか余白が広いか、といった性質です。特定のルールやトークンが明示されていない場合に、エージェントが高いレベルのスタイル判断を行うための基礎的な文脈となります。
 
 ## Colors
 
-This section defines the color palettes for the design system.
+このセクションでは、デザインシステムのカラーパレットを定義します。
 
-At least the `primary` color palette must be defined, and additional color palettes may be defined as needed.
+少なくとも `primary` カラーパレットを定義する必要があり、必要に応じて追加のカラーパレットを定義できます。
 
-When there are multiple color palettes, the design system may assign a semantic role for each palette. A common convention is to name the palettes in this order: `primary`, `secondary`, `tertiary`, and `neutral`.
+複数のカラーパレットがある場合、デザインシステムは各パレットにセマンティックな役割を割り当てられます。一般的な命名規則では、`primary`、`secondary`、`tertiary`、`neutral` の順にパレットへ名前を付けます。
 
-Example:
+例:
 
 ```markdown
 ## Colors
@@ -133,12 +132,11 @@ The palette is rooted in high-contrast neutrals and a single, evocative accent c
   pages, providing a softer, more organic feel than pure white.
 ```
 
-### Design Tokens
+### デザイントークン
 
-The `colors` section defines all color design tokens. The color tokens should be derived from the key color palettes defined in the markdown prose. The exact mapping from color palettes to color tokens may follow any consistent naming convention.
+`colors` セクションでは、すべてのカラーデザイントークンを定義します。カラートークンは、Markdown の説明文で定義した主要なカラーパレットから導出します。カラーパレットからカラートークンへの正確な対応付けには、一貫性のある任意の命名規則を使用できます。
 
-It is a
-map\<string, Color>, that maps the name of the color token to its value.
+これは、カラートークン名を値へ対応付ける map\<string, Color> です。
 
 ```yaml
 colors:
@@ -150,13 +148,13 @@ colors:
 
 ## Typography
 
-This section defines typography levels.
+このセクションでは、タイポグラフィのレベルを定義します。
 
-Most design systems have 9 - 15 typography levels. The design system may prescribe a role for each typography level.
+多くのデザインシステムには 9〜15 のタイポグラフィレベルがあります。デザインシステムは、各タイポグラフィレベルの役割を規定できます。
 
-A common naming convention for typography levels is to use semantic categories such as `headline`, `display`, `body`, `label`, `caption`. Each category may further be divided into different sizes, such as `small`, `medium`, and `large`.
+一般的な命名規則では、`headline`、`display`、`body`、`label`、`caption` などのセマンティックなカテゴリを使用します。各カテゴリは、`small`、`medium`、`large` などの異なるサイズにさらに分けることができます。
 
-Example:
+例:
 
 ```markdown
 ## Typography
@@ -173,12 +171,11 @@ the narrative and **Space Grotesk** for technical data.
   stopwatch. Labels are strictly uppercase with generous letter spacing.
 ```
 
-### Design Tokens
+### デザイントークン
 
-The `typography` section defines the precise font properties for the typography design tokens.
+`typography` セクションでは、タイポグラフィデザイントークンの正確なフォントプロパティを定義します。
 
-It is a
-map\<string, Typography>
+これは map\<string, Typography> です。
 
 ```yaml
 typography:
@@ -203,13 +200,13 @@ typography:
 
 ## Layout
 
-Also known as "Layout & Spacing".
+「Layout & Spacing」とも呼ばれます。
 
-This section describes the layout and spacing strategy.
+このセクションでは、レイアウトとスペーシングの方針を説明します。
 
-Many design systems follow a grid-based layout. Others, like Liquid Glass, use margins, safe areas, and dynamic padding.
+多くのデザインシステムはグリッドベースのレイアウトに従います。Liquid Glass のように、マージン、セーフエリア、動的なパディングを使用するものもあります。
 
-Example:
+例:
 
 ```markdown
 ## Layout
@@ -220,12 +217,11 @@ The layout follows a **Fluid Grid** model for mobile devices and a
 A strict 8px spacing scale (with a 4px half-step for micro-adjustments) is used to maintain a consistent rhythm. Components are grouped using "containment" principles, where related items are housed in cards with generous internal padding (24px) to emphasize the soft, approachable nature of the brand.
 ```
 
-### Design Tokens
+### デザイントークン
 
-The spacing section defines the spacing design tokens. These may include spacing units that are useful for implementing the layout model. For example, a fixed grid layout may have spacing units for column spans, gutters, and margins.
+spacing セクションでは、スペーシングのデザイントークンを定義します。レイアウトモデルの実装に役立つスペーシング単位を含めることができます。たとえば、固定グリッドレイアウトでは、列のスパン、ガター、マージン用のスペーシング単位を定義できます。
 
-It is a
-map\<string, Dimension | number> that maps the spacing scale identifier to a dimension value or a unitless number (e.g., column counts or ratios).
+これは、スペーシングスケールの識別子を寸法値または単位なしの数値（例: 列数や比率）へ対応付ける map\<string, Dimension | number> です。
 
 ```yaml
 spacing:
@@ -241,11 +237,11 @@ spacing:
 
 ## Elevation & Depth
 
-Also known as "Elevation".
+「Elevation」とも呼ばれます。
 
-This section describes how visual hierarchy is conveyed based on the design style. If elevation is used, it defines the required styling (spread, blur, color). For flat designs, this section explains the alternative methods used to convey visual hierarchy (e.g., borders, color contrast).
+このセクションでは、デザインスタイルに基づいて視覚的な階層を伝える方法を説明します。エレベーションを使用する場合は、必要なスタイル（広がり、ぼかし、色）を定義します。フラットデザインの場合は、視覚的な階層を伝える代替手段（例: ボーダー、色のコントラスト）を説明します。
 
-Example:
+例:
 
 ```markdown
 ## Elevation & Depth
@@ -256,9 +252,9 @@ background uses a soft off-white or very light green, while primary content sits
 
 ## Shapes
 
-This section describes how visual elements are shaped.
+このセクションでは、視覚要素の形状を説明します。
 
-Example:
+例:
 
 ```markdown
 ## Shapes
@@ -269,12 +265,11 @@ provides just enough softness to feel modern while maintaining a rigid,
 engineered aesthetic.
 ```
 
-### Design Tokens
+### デザイントークン
 
-The `rounded` section defines the design tokens for rounded corners used in
-buttons, cards, and other rectangular shapes.
+`rounded` セクションでは、ボタン、カード、その他の矩形に使用する角丸のデザイントークンを定義します。
 
-It is a map\<string, Dimension>.
+これは map\<string, Dimension> です。
 
 ```yaml
 rounded:
@@ -286,23 +281,23 @@ rounded:
 
 ## Components
 
-This section provides style guidance for component atoms within the design system. The following are common component types. Design systems are encouraged to define additional components relevant to their domain.
+このセクションでは、デザインシステム内のコンポーネントアトムに対するスタイルガイダンスを提供します。一般的なコンポーネントの種類は次のとおりです。デザインシステムでは、その領域に関連する追加のコンポーネントを定義することを推奨します。
 
-* **Buttons**: Covers primary, secondary, and tertiary variants, including sizing, padding, and states.
-* **Chips**: Covers selection chips, filter chips, and action chips.
-* **Lists**: Covers styling for list items, dividers, and leading/trailing elements.
-* **Tooltips**: Covers positioning, colors, and timing.
-* **Checkboxes**: Covers checked, unchecked, and indeterminate states.
-* **Radio buttons**: Covers selected and unselected states.
-* **Input fields**: Covers text inputs, text areas, labels, helper text, and error states.
+* **Buttons**: primary、secondary、tertiary のバリアント（サイズ、パディング、状態を含む）。
+* **Chips**: 選択チップ、フィルターチップ、アクションチップ。
+* **Lists**: リスト項目、区切り線、先頭／末尾の要素のスタイル。
+* **Tooltips**: 位置、色、タイミング。
+* **Checkboxes**: checked、unchecked、indeterminate の状態。
+* **Radio buttons**: selected、unselected の状態。
+* **Input fields**: テキスト入力、テキストエリア、ラベル、ヘルパーテキスト、エラー状態。
 
-> **Note:** The components specification is actively evolving. The current structure provides intentional flexibility for domain-specific component definitions while the spec matures.
+> **注:** コンポーネント仕様は現在も活発に進化しています。現行の構造は、仕様が成熟するまでの間、領域固有のコンポーネント定義に意図的な柔軟性を持たせています。
 
-### Design Tokens
+### デザイントークン
 
-The components section defines a collection of design tokens used to ensure consistent styling of common components. It's a map\<string, map\<string, string>> that maps a component identifier to a group of sub token names and values. The design token values may be literal values, or references to previously defined design tokens.
+components セクションでは、一般的なコンポーネントの一貫したスタイルを保証するために使用するデザイントークンの集合を定義します。これは、コンポーネント識別子をサブトークン名と値のグループへ対応付ける map\<string, map\<string, string>> です。デザイントークンの値には、リテラル値または先に定義したデザイントークンへの参照を使用できます。
 
-**Variants**. A component may have a variant for different UI states such as active, hover, pressed, etc. Those variant components may be defined under a different but related key, for example, "button-primary", "button-primary-hover", "button-primary-active". The agent will consider all variants and make the appropriate styling decisions.
+**バリアント**: コンポーネントには、active、hover、pressed などの異なる UI 状態に対応するバリアントを設定できます。これらのバリアントコンポーネントは、たとえば「button-primary」「button-primary-hover」「button-primary-active」のように、異なる関連キーの下に定義できます。エージェントはすべてのバリアントを考慮し、適切なスタイルを判断します。
 
 ```yaml
 components:
@@ -315,9 +310,9 @@ components:
     backgroundColor: "{colors.primary-70}"
 ```
 
-### Component Property Tokens
+### コンポーネントプロパティトークン
 
-Each component has a set of properties that are themselves design tokens:
+各コンポーネントは、それ自体がデザイントークンとなる一連のプロパティを持ちます。
 
 - backgroundColor: \<Color\>
 - textColor: \<Color\>
@@ -330,7 +325,7 @@ Each component has a set of properties that are themselves design tokens:
 
 ## Do's and Don'ts
 
-This section provides practical guidelines and common pitfalls. These act as guardrails when creating designs.
+このセクションでは、実践的なガイドラインとよくある落とし穴を示します。これらはデザイン作成時のガードレールとして機能します。
 
 ```markdown
 ## Do's and Don'ts
@@ -341,25 +336,25 @@ This section provides practical guidelines and common pitfalls. These act as gua
 - Don't use more than two font weights on a single screen
 ```
 
-# Recommended Token Names (Non-Normative)
+# 推奨トークン名（非規範）
 
-The following names are commonly used across design systems. They are not required but are provided as guidance for consistency.
+以下の名前は、デザインシステム全般で一般的に使用されています。必須ではありませんが、一貫性を保つためのガイダンスとして示します。
 
-**Colors:** `primary`, `secondary`, `tertiary`, `neutral`, `surface`, `on-surface`, `error`
+**Colors:** `primary`、`secondary`、`tertiary`、`neutral`、`surface`、`on-surface`、`error`
 
-**Typography:** `headline-display`, `headline-lg`, `headline-md`, `body-lg`, `body-md`, `body-sm`, `label-lg`, `label-md`, `label-sm`
+**Typography:** `headline-display`、`headline-lg`、`headline-md`、`body-lg`、`body-md`、`body-sm`、`label-lg`、`label-md`、`label-sm`
 
-**Rounded:** `none`, `sm`, `md`, `lg`, `xl`, `full`
+**Rounded:** `none`、`sm`、`md`、`lg`、`xl`、`full`
 
-# Consumer Behavior for Unknown Content
+# 未知のコンテンツに対するコンシューマーの動作
 
-When a DESIGN.md consumer encounters content not defined by this spec:
+DESIGN.md のコンシューマーがこの仕様で定義されていないコンテンツに遭遇した場合は、次のように動作します。
 
-| Scenario | Behavior | Example |
+| 状況 | 動作 | 例 |
 |---|---|---|
-| Unknown section heading | Preserve; do not error | `## Iconography` |
-| Unknown color token name | Accept if value is valid | `surface-container-high: '#ede7dd'` |
-| Unknown typography token name | Accept as valid typography | `telemetry-data` |
-| Unknown spacing value | Accept; store as string if not a valid dimension | `grid-columns: '5'` |
-| Unknown component property | Accept with warning | `borderColor` |
-| Duplicate section heading | Error; reject the file | Two `## Colors` headings |
+| 未知のセクション見出し | 保持し、エラーにしない | `## Iconography` |
+| 未知のカラートークン名 | 値が有効なら受け入れる | `surface-container-high: '#ede7dd'` |
+| 未知のタイポグラフィトークン名 | 有効なタイポグラフィとして受け入れる | `telemetry-data` |
+| 未知の spacing の値 | 有効な Dimension でなければ文字列として格納して受け入れる | `grid-columns: '5'` |
+| 未知のコンポーネントプロパティ | 警告付きで受け入れる | `borderColor` |
+| 重複したセクション見出し | エラーとしてファイルを拒否する | `## Colors` 見出しが 2 つある |

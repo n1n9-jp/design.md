@@ -14,7 +14,7 @@
 
 # DESIGN.md Spec Configuration
 # This file is the single source of truth for the DESIGN.md format specification.
-# Edit this file, then run `bun run spec:gen` to regenerate docs/spec.md.
+# Edit this file, then run `bun run spec:gen` to regenerate docs/spec_en.md.
 
 version: alpha
 
