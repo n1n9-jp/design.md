@@ -1,10 +1,12 @@
 # DESIGN.md
 
-A format specification for describing a visual identity to coding agents. DESIGN.md gives agents a persistent, structured understanding of a design system.
+[English](README_en.md)
 
-## The Format
+コーディングエージェントにビジュアルアイデンティティを伝えるためのフォーマット仕様です。DESIGN.md は、デザインシステムを永続的かつ構造化された形でエージェントに理解させます。
 
-A DESIGN.md file combines machine-readable design tokens (YAML front matter) with human-readable design rationale (markdown prose). Tokens give agents exact values. Prose tells them *why* those values exist and how to apply them.
+## フォーマット
+
+DESIGN.md ファイルは、機械可読なデザイントークン（YAML フロントマター）と、人間が読めるデザインの意図（Markdown の説明文）を組み合わせたものです。トークンは正確な値をエージェントに伝え、説明文はその値が存在する理由と適用方法を伝えます。
 
 ```md
 ---
@@ -47,11 +49,11 @@ The palette is rooted in high-contrast neutrals and a single accent color.
 - **Neutral (#F7F5F2):** Warm limestone foundation, softer than pure white.
 ```
 
-An agent that reads this file will produce a UI with deep ink headlines in Public Sans, a warm limestone background, and Boston Clay call-to-action buttons.
+このファイルを読み込んだエージェントは、Public Sans の濃いインク色の見出し、温かみのあるライムストーン色の背景、Boston Clay 色の CTA ボタンを備えた UI を生成します。
 
-## Getting Started
+## はじめに
 
-Validate a DESIGN.md against the spec, catch broken token references, check WCAG contrast ratios, and surface structural findings — all as structured JSON that agents can act on.
+DESIGN.md を仕様に照らして検証し、壊れたトークン参照の検出、WCAG コントラスト比の確認、構造上の問題の提示を行います。すべての結果は、エージェントが処理できる構造化 JSON として出力されます。
 
 ```bash
 npx @google/design.md lint DESIGN.md
@@ -70,7 +72,7 @@ npx @google/design.md lint DESIGN.md
 }
 ```
 
-Compare two versions of a design system to detect token-level and prose regressions:
+デザインシステムの 2 つのバージョンを比較し、トークン単位および説明文のリグレッションを検出します。
 
 ```bash
 npx @google/design.md diff DESIGN.md DESIGN-v2.md
@@ -86,25 +88,25 @@ npx @google/design.md diff DESIGN.md DESIGN-v2.md
 }
 ```
 
-## The Specification
+## 仕様
 
-The full DESIGN.md spec lives at [`docs/spec.md`](docs/spec.md). What follows is a condensed reference.
+DESIGN.md の完全な仕様は [`docs/spec.md`](docs/spec.md) にあります。以下はその要約です。
 
-### File Structure
+### ファイル構造
 
-A DESIGN.md file has two layers:
+DESIGN.md ファイルは 2 つのレイヤーで構成されます。
 
-1. **YAML front matter** — Machine-readable design tokens, delimited by `---` fences at the top of the file.
-2. **Markdown body** — Human-readable design rationale organized into `##` sections.
+1. **YAML フロントマター** — ファイル先頭の `---` で囲まれた、機械可読なデザイントークン。
+2. **Markdown 本文** — `##` セクションで整理された、人間が読めるデザインの意図。
 
-The tokens are the normative values. The prose provides context for how to apply them.
+トークンは規範となる値です。説明文は、その値を適用する方法についての文脈を提供します。
 
-### Token Schema
+### トークンスキーマ
 
 ```yaml
-version: <string>          # optional, current: "alpha"
+version: <string>          # 任意、現在値: "alpha"
 name: <string>
-description: <string>      # optional
+description: <string>      # 任意
 colors:
   <token-name>: <Color>
 typography:
@@ -118,21 +120,21 @@ components:
     <token-name>: <string | token reference>
 ```
 
-### Token Types
+### トークン型
 
-| Type | Format | Example |
-|:-----|:-------|:--------|
-| Color | Any CSS color (hex, `rgb()`, `oklch()`, named, etc.) | `"#1A1C1E"`, `"oklch(62% 0.18 250)"` |
-| Dimension | number + unit (`px`, `em`, `rem`) | `48px`, `-0.02em` |
+| 型 | 形式 | 例 |
+|:---|:-----|:---|
+| Color | 任意の CSS カラー（hex、`rgb()`、`oklch()`、名前付きカラーなど） | `"#1A1C1E"`、`"oklch(62% 0.18 250)"` |
+| Dimension | 数値 + 単位（`px`、`em`、`rem`） | `48px`、`-0.02em` |
 | Token Reference | `{path.to.token}` | `{colors.primary}` |
-| Typography | object with `fontFamily`, `fontSize`, `fontWeight`, `lineHeight`, `letterSpacing`, `fontFeature`, `fontVariation` | See example above |
+| Typography | `fontFamily`、`fontSize`、`fontWeight`、`lineHeight`、`letterSpacing`、`fontFeature`、`fontVariation` を持つオブジェクト | 上記の例を参照 |
 
-### Section Order
+### セクションの順序
 
-Sections use `##` headings. They can be omitted, but those present must appear in this order:
+セクションには `##` 見出しを使用します。各セクションは省略できますが、記載する場合は次の順序にする必要があります。
 
-| # | Section | Aliases |
-|:--|:--------|:--------|
+| # | セクション | 別名 |
+|:--|:-----------|:-----|
 | 1 | Overview | Brand & Style |
 | 2 | Colors | |
 | 3 | Typography | |
@@ -142,9 +144,9 @@ Sections use `##` headings. They can be omitted, but those present must appear i
 | 7 | Components | |
 | 8 | Do's and Don'ts | |
 
-### Component Tokens
+### コンポーネントトークン
 
-Components map a name to a group of sub-token properties:
+コンポーネントは、名前をサブトークンのプロパティ群に対応づけます。
 
 ```yaml
 components:
@@ -157,72 +159,63 @@ components:
     backgroundColor: "{colors.tertiary-container}"
 ```
 
-Valid component properties: `backgroundColor`, `textColor`, `typography`, `rounded`, `padding`, `size`, `height`, `width`.
+有効なコンポーネントプロパティは `backgroundColor`、`textColor`、`typography`、`rounded`、`padding`、`size`、`height`、`width` です。
 
-Variants (hover, active, pressed) are expressed as separate component entries with a related key name.
+バリアント（hover、active、pressed）は、関連するキー名を持つ個別のコンポーネントエントリとして表現します。
 
-### Consumer Behavior for Unknown Content
+### 未知のコンテンツに対するコンシューマーの動作
 
-| Scenario | Behavior |
-|:---------|:---------|
-| Unknown section heading | Preserve; do not error |
-| Unknown color token name | Accept if value is valid |
-| Unknown typography token name | Accept as valid typography |
-| Unknown component property | Accept with warning |
-| Duplicate section heading | Error; reject the file |
+| 状況 | 動作 |
+|:-----|:-----|
+| 未知のセクション見出し | 保持し、エラーにしない |
+| 未知のカラートークン名 | 値が有効なら受け入れる |
+| 未知のタイポグラフィトークン名 | 有効なタイポグラフィとして受け入れる |
+| 未知のコンポーネントプロパティ | 警告付きで受け入れる |
+| 重複したセクション見出し | エラーとしてファイルを拒否する |
 
-## CLI Reference
+## CLI リファレンス
 
-### Installation
+### インストール
 
 ```bash
 npm install @google/design.md
 ```
 
-On **Windows**, quote the package name if your shell treats `@` specially (PowerShell, some terminals):
+シェルが `@` を特別に扱う **Windows** 環境（PowerShell、一部のターミナル）では、パッケージ名を引用符で囲んでください。
 
 ```bash
 npm install "@google/design.md"
 ```
 
-Or run directly (always resolves from the public npm registry):
+直接実行することもできます（常に公開 npm レジストリから解決されます）。
 
 ```bash
 npx @google/design.md lint DESIGN.md
 ```
 
-On **Windows/PowerShell**, this direct form can produce no output (or open
-`DESIGN.md` in your Markdown editor) because the `.md` suffix in the `design.md`
-bin name collides with the Windows Markdown file association during command
-resolution. Run the dot-free `designmd` alias instead — point `npx` at the
-package with `-p`, then invoke `designmd`:
+**Windows/PowerShell** では、`design.md` という bin 名の `.md` 接尾辞がコマンド解決時に Windows の Markdown ファイル関連付けと衝突するため、この形式では何も出力されないか、Markdown エディターで `DESIGN.md` が開く場合があります。代わりに、ドットを含まない `designmd` エイリアスを使用してください。`-p` で `npx` にパッケージを指定してから、`designmd` を呼び出します。
 
 ```bash
 npx -p @google/design.md designmd lint DESIGN.md
 ```
 
-The `designmd` shim resolves to the same entrypoint and works identically across
-all platforms.
+`designmd` shim は同じエントリーポイントに解決され、すべてのプラットフォームで同じように動作します。
 
-#### `npm error ENOVERSIONS` (“No versions available for @google/design.md”)
+#### `npm error ENOVERSIONS`（「No versions available for @google/design.md」）
 
-The CLI is published as [`@google/design.md` on npm](https://www.npmjs.com/package/@google/design.md). `ENOVERSIONS` almost always means npm is not querying the public registry (custom `registry=` in `.npmrc`, a corporate mirror that has not synced this package, or a misconfigured `@google:registry` for the `@google` scope).
+CLI は npm に [`@google/design.md`](https://www.npmjs.com/package/@google/design.md) として公開されています。`ENOVERSIONS` はほとんどの場合、npm が公開レジストリを参照していないことを意味します（`.npmrc` の独自 `registry=`、このパッケージをまだ同期していない社内ミラー、`@google` スコープに対する `@google:registry` の設定ミスなど）。
 
-Check your effective registry:
+現在有効なレジストリを確認します。
 
 ```bash
 npm config get registry
 ```
 
-For a normal install from the internet it should be `https://registry.npmjs.org/`. After fixing config, retry with `npm cache clean --force` if a stale 404 was cached.
+通常のインターネット経由のインストールでは、`https://registry.npmjs.org/` になっている必要があります。設定を修正した後、古い 404 がキャッシュされている場合は `npm cache clean --force` を実行してから再試行してください。
 
-All commands accept a file path or `-` for stdin. Output defaults to JSON.
+すべてのコマンドは、ファイルパスまたは標準入力を表す `-` を受け付けます。デフォルトの出力形式は JSON です。
 
-> **Windows tip**: when invoking the CLI directly from a `package.json` script
-> (rather than through `npx`), use the `designmd` alias instead of `design.md`.
-> The `.md` suffix in the original bin name confuses Windows command resolution
-> with the file association for Markdown files. The `designmd` shim resolves to
-> the same entrypoint and works identically across all platforms.
+> **Windows のヒント**: `npx` を介さず、`package.json` スクリプトから CLI を直接呼び出す場合は、`design.md` ではなく `designmd` エイリアスを使用してください。元の bin 名の `.md` 接尾辞が Windows のコマンド解決時に Markdown のファイル関連付けと衝突します。`designmd` shim は同じエントリーポイントに解決され、すべてのプラットフォームで同じように動作します。
 >
 > ```jsonc
 > // package.json
@@ -235,7 +228,7 @@ All commands accept a file path or `-` for stdin. Output defaults to JSON.
 
 ### `lint`
 
-Validate a DESIGN.md file for structural correctness.
+DESIGN.md ファイルの構造が正しいか検証します。
 
 ```bash
 npx @google/design.md lint DESIGN.md
@@ -243,32 +236,32 @@ npx @google/design.md lint --format json DESIGN.md
 cat DESIGN.md | npx @google/design.md lint -
 ```
 
-| Option | Type | Default | Description |
-|:-------|:-----|:--------|:------------|
-| `file` | positional | required | Path to DESIGN.md (or `-` for stdin) |
-| `--format` | `json` | `json` | Output format |
+| オプション | 型 | デフォルト | 説明 |
+|:-----------|:---|:-----------|:-----|
+| `file` | 位置引数 | 必須 | DESIGN.md へのパス（標準入力の場合は `-`） |
+| `--format` | `json` | `json` | 出力形式 |
 
-Exit code `1` if errors are found, `0` otherwise.
+エラーが見つかった場合の終了コードは `1`、それ以外は `0` です。
 
 ### `diff`
 
-Compare two DESIGN.md files and report token-level changes.
+2 つの DESIGN.md ファイルを比較し、トークン単位の変更を報告します。
 
 ```bash
 npx @google/design.md diff DESIGN.md DESIGN-v2.md
 ```
 
-| Option | Type | Default | Description |
-|:-------|:-----|:--------|:------------|
-| `before` | positional | required | Path to the "before" DESIGN.md |
-| `after` | positional | required | Path to the "after" DESIGN.md |
-| `--format` | `json` | `json` | Output format |
+| オプション | 型 | デフォルト | 説明 |
+|:-----------|:---|:-----------|:-----|
+| `before` | 位置引数 | 必須 | 変更前の DESIGN.md へのパス |
+| `after` | 位置引数 | 必須 | 変更後の DESIGN.md へのパス |
+| `--format` | `json` | `json` | 出力形式 |
 
-Exit code `1` if regressions are detected (more errors or warnings in the "after" file).
+リグレッション（変更後のファイルでエラーまたは警告が増加）が検出された場合の終了コードは `1` です。
 
 ### `export`
 
-Export DESIGN.md tokens to other formats.
+DESIGN.md のトークンを他の形式にエクスポートします。
 
 ```bash
 npx @google/design.md export --format json-tailwind DESIGN.md > tailwind.theme.json
@@ -276,23 +269,23 @@ npx @google/design.md export --format css-tailwind DESIGN.md > theme.css
 npx @google/design.md export --format dtcg DESIGN.md > tokens.json
 ```
 
-| Option | Type | Default | Description |
-|:-------|:-----|:--------|:------------|
-| `file` | positional | required | Path to DESIGN.md (or `-` for stdin) |
-| `--format` | `json-tailwind` \| `css-tailwind` \| `tailwind` \| `dtcg` | required | Output format |
+| オプション | 型 | デフォルト | 説明 |
+|:-----------|:---|:-----------|:-----|
+| `file` | 位置引数 | 必須 | DESIGN.md へのパス（標準入力の場合は `-`） |
+| `--format` | `json-tailwind` \| `css-tailwind` \| `tailwind` \| `dtcg` | 必須 | 出力形式 |
 
-| Format | Output | Description |
-|:-------|:-------|:------------|
-| `json-tailwind` | JSON | Tailwind v3 `theme.extend` config object |
-| `css-tailwind` | CSS | Tailwind v4 `@theme { ... }` block with CSS custom properties |
-| `tailwind` | JSON | Alias for `json-tailwind` |
+| 形式 | 出力 | 説明 |
+|:-----|:-----|:-----|
+| `json-tailwind` | JSON | Tailwind v3 の `theme.extend` 設定オブジェクト |
+| `css-tailwind` | CSS | CSS カスタムプロパティを含む Tailwind v4 の `@theme { ... }` ブロック |
+| `tailwind` | JSON | `json-tailwind` のエイリアス |
 | `dtcg` | JSON | W3C Design Tokens Format Module |
 
-Exit code `0` on a successful export (regardless of any lint findings in the source — run `lint` to gate on those), `1` on an invalid `--format` or an emitter error, and `2` if the input file cannot be read.
+エクスポートに成功した場合の終了コードは `0`（ソースに lint の指摘があっても変わりません。指摘を判定に使用するには `lint` を実行してください）、無効な `--format` またはエミッターエラーの場合は `1`、入力ファイルを読み込めない場合は `2` です。
 
 ### `spec`
 
-Output the DESIGN.md format specification (useful for injecting spec context into agent prompts).
+DESIGN.md のフォーマット仕様を出力します（エージェントのプロンプトに仕様のコンテキストを注入する場合に便利です）。
 
 ```bash
 npx @google/design.md spec
@@ -300,31 +293,31 @@ npx @google/design.md spec --rules
 npx @google/design.md spec --rules-only --format json
 ```
 
-| Option | Type | Default | Description |
-|:-------|:-----|:--------|:------------|
-| `--rules` | boolean | `false` | Append the active linting rules table |
-| `--rules-only` | boolean | `false` | Output only the linting rules table |
-| `--format` | `markdown` \| `json` | `markdown` | Output format |
+| オプション | 型 | デフォルト | 説明 |
+|:-----------|:---|:-----------|:-----|
+| `--rules` | boolean | `false` | 有効な lint ルールの表を末尾に追加 |
+| `--rules-only` | boolean | `false` | lint ルールの表のみを出力 |
+| `--format` | `markdown` \| `json` | `markdown` | 出力形式 |
 
-## Linting Rules
+## Lint ルール
 
-The linter runs nine rules against a parsed DESIGN.md. Each rule produces findings at a fixed severity level.
+リンターは、解析された DESIGN.md に対して 9 つのルールを実行します。各ルールは固定の重要度で指摘を生成します。
 
-| Rule | Severity | What it checks |
-|:-----|:---------|:---------------|
-| `broken-ref` | error | Token references (`{colors.primary}`) that don't resolve to any defined token |
-| `missing-primary` | warning | Colors are defined but no `primary` color exists — agents will auto-generate one |
-| `contrast-ratio` | warning | Component `backgroundColor`/`textColor` pairs below WCAG AA minimum (4.5:1) |
-| `orphaned-tokens` | warning | Color tokens defined but never referenced by any component |
-| `token-summary` | info | Summary of how many tokens are defined in each section |
-| `missing-sections` | info | Optional sections (spacing, rounded) absent when other tokens exist |
-| `missing-typography` | warning | Colors are defined but no typography tokens exist — agents will use default fonts |
-| `section-order` | warning | Sections appear out of the canonical order defined by the spec |
-| `unknown-key` | warning | A top-level YAML key looks like a typo of a known schema key (e.g. `colours:` → `colors:`); custom extension keys stay silent |
+| ルール | 重要度 | 確認内容 |
+|:-------|:-------|:---------|
+| `broken-ref` | error | 定義済みトークンに解決できないトークン参照（`{colors.primary}`） |
+| `missing-primary` | warning | 色が定義されているが `primary` カラーが存在しない状態（エージェントが自動生成します） |
+| `contrast-ratio` | warning | コンポーネントの `backgroundColor` と `textColor` の組み合わせが WCAG AA の最低基準（4.5:1）を下回っている状態 |
+| `orphaned-tokens` | warning | 定義されているが、どのコンポーネントからも参照されていないカラートークン |
+| `token-summary` | info | 各セクションで定義されているトークン数の概要 |
+| `missing-sections` | info | 他のトークンが存在する場合に任意セクション（spacing、rounded）が欠けている状態 |
+| `missing-typography` | warning | 色が定義されているがタイポグラフィトークンが存在しない状態（エージェントはデフォルトフォントを使用します） |
+| `section-order` | warning | セクションが仕様で定められた順序になっていない状態 |
+| `unknown-key` | warning | トップレベルの YAML キーが既知のスキーマキーのタイプミスに見える状態（例: `colours:` → `colors:`）。独自の拡張キーは対象外 |
 
-### Programmatic API
+### プログラマティック API
 
-The linter is also available as a library:
+リンターはライブラリとしても利用できます。
 
 ```typescript
 import { lint } from '@google/design.md/linter';
@@ -336,19 +329,18 @@ console.log(report.summary);        // { errors, warnings, info }
 console.log(report.designSystem);   // Parsed DesignSystemState
 ```
 
-## Design Token Interoperability
+## デザイントークンの相互運用性
 
-DESIGN.md tokens are inspired by the [W3C Design Token Format](https://www.designtokens.org/). The `export` command converts tokens to other formats:
+DESIGN.md のトークンは [W3C Design Token Format](https://www.designtokens.org/) から着想を得ています。`export` コマンドでトークンを他の形式に変換できます。
 
-- **Tailwind v3 config (JSON)** — `npx @google/design.md export --format json-tailwind DESIGN.md` — emits a `theme.extend` JSON object for `tailwind.config.js`. `--format tailwind` is a backwards-compatible alias.
-- **Tailwind v4 theme (CSS)** — `npx @google/design.md export --format css-tailwind DESIGN.md` — emits a CSS `@theme { ... }` block using Tailwind v4's CSS-variable token namespaces (`--color-*`, `--font-*`, `--text-*`, `--leading-*`, `--tracking-*`, `--font-weight-*`, `--radius-*`, `--spacing-*`).
-- **DTCG tokens.json** ([W3C Design Tokens Format Module](https://tr.designtokens.org/format/)) — `npx @google/design.md export --format dtcg DESIGN.md`
+- **Tailwind v3 設定（JSON）** — `npx @google/design.md export --format json-tailwind DESIGN.md` — `tailwind.config.js` 用の `theme.extend` JSON オブジェクトを出力します。`--format tailwind` は後方互換性のためのエイリアスです。
+- **Tailwind v4 テーマ（CSS）** — `npx @google/design.md export --format css-tailwind DESIGN.md` — Tailwind v4 の CSS 変数トークン名前空間（`--color-*`、`--font-*`、`--text-*`、`--leading-*`、`--tracking-*`、`--font-weight-*`、`--radius-*`、`--spacing-*`）を使用する CSS の `@theme { ... }` ブロックを出力します。
+- **DTCG tokens.json**（[W3C Design Tokens Format Module](https://tr.designtokens.org/format/)）— `npx @google/design.md export --format dtcg DESIGN.md`
 
-## Status
+## ステータス
 
-The DESIGN.md format is at version `alpha`. The spec, token schema, and CLI are under active development. Expect changes to the format as it matures.
+DESIGN.md フォーマットのバージョンは `alpha` です。仕様、トークンスキーマ、CLI は現在活発に開発されています。フォーマットの成熟に伴い、変更される可能性があります。
 
-## Disclaimer
+## 免責事項
 
-This project is not eligible for the [Google Open Source Software Vulnerability
-Rewards Program](https://bughunters.google.com/open-source-security).
+このプロジェクトは [Google Open Source Software Vulnerability Rewards Program](https://bughunters.google.com/open-source-security) の対象外です。
